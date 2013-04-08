@@ -1,7 +1,7 @@
 shinyUI(pageWithSidebar(
   headerPanel("Shiny Widgets"),
   sidebarPanel(
-    sliderInput("in_controlslider", "This slider controls other inputs:", min = 1, max = 20, value = 15,
+    sliderInput("in_controller", "This slider controls other inputs:", min = 1, max = 20, value = 15,
                 ticks = TRUE),
 
     textInput("in_text", "Text input:", value="starting value"),

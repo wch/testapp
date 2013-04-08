@@ -36,7 +36,7 @@ shinyServer(function(input, output, clientData, session) {
     #   )
     # )
 
-    x <- input$in_controlslider
+    x <- input$in_controller
     x_even <- x %% 2 == 0
 
     # Convenience version of above:
@@ -44,8 +44,6 @@ shinyServer(function(input, output, clientData, session) {
       value = x, min = -40, max = 1000, step = 10)
 
     updateTextInput(session, 'in_text', value = paste("text", x))
-
-    updateSliderInput(session, 'in_text', value = paste("text", x))
 
     updateCheckboxInput(session, 'in_checkbox', value = x_even)
 
@@ -120,8 +118,8 @@ shinyServer(function(input, output, clientData, session) {
 
     # For slider2 value, set both, just upper, or just lower, depending on x
     if (x > 10)      slider2_value <- c(x, x+20)
-    else if (x < 6)  slider2_value <- c(x, NA)
-    else             slider2_value <- c(NA, x+20)
+    else if (x > 5)  slider2_value <- c(NA, x+20)
+    else             slider2_value <- c(x, NA)
     updateSliderInput(session, 'in_slider2', value = slider2_value)
 
 
