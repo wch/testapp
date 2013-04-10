@@ -1,156 +1,113 @@
 shinyServer(function(input, output, clientData, session) {
-  output$out_text <- renderText({
-    input$in_text
-  })
-  output$out_number <- renderText({
-    input$in_number
-  })
-  output$out_checkbox <- renderText({
-    input$in_checkbox
-  })
-  output$out_checkboxgroup <- renderText({
-    paste(input$in_checkboxgroup, collapse = ", ")
-  })
-  output$out_radio <- renderText({
-    input$in_radio
-  })
-  output$out_select <- renderText({
-    input$in_select
-  })
-  output$out_slider <- renderText({
-    input$in_slider
-  })
-  output$out_slider2 <- renderText({
-    input$in_slider2
-  })
 
-
-
-  # Send message to the in_number objet
   observe({
-    # session$send(
-    #   type = "inputMessage",
-    #   data = list(
-    #     id = in_number, 
-    #     message = list(value = input$in_slider, min = -40, max = 1000, step = 10)
-    #   )
-    # )
+    # We'll use the input$controller variable multiple times, so save it as x
+    # for convenience.
+    x <- input$controller
 
-    x <- input$in_controller
-    if (is.null(x)) 
-      x <- 10
+    # TRUE if x is even, FALSE otherwise. Will be used below
     x_even <- x %% 2 == 0
 
-    # Convenience version of above:
-    updateNumberInput(session, 'in_number',
-      label = paste('number label ', x),
-      value = x, min = -40, max = 1000, step = 10)
 
-    updateTextInput(session, 'in_text',
-      label = paste('text label ', x),
-      value = paste('text', x))
+    # Text ============================================================
+    # This will change the value of input$inText, based on x
+    updateTextInput(session, "inText", value = paste("New text", x))
 
-    updateCheckboxInput(session, 'in_checkbox',
-      label = paste('checkbox label ', x),
-      value = x_even)
+    # Can also set the label, this time for input$inText2
+    updateTextInput(session, "inText2",
+      label = paste("New label", x),
+      value = paste("New text", x))
 
 
-    # Checkbox group ========================================================
-    checkboxgroup_options <- c(paste0('option', x, '-1'),
-                               paste0('option', x, '-2'))
-    names(checkboxgroup_options) <- c(paste0('option', x, '-1 label'),
-                                      paste0('option', x, '-2 label'))
-    if (x_even) {
-      checkboxgroup_selected <- names(checkboxgroup_options)[1]
-    } else {
-      checkboxgroup_selected <- names(checkboxgroup_options)[2]
-    }
+    # Number ==========================================================
+    # Number inputs have more settable parameters
+    updateNumericInput(session, "inNumber", value = x)
 
-    updateCheckboxGroupInput(session, 'in_checkboxgroup', 
-      label = paste('checkboxgroup label', x),
-      choices = checkboxgroup_options,
-      selected = checkboxgroup_selected
-    )
-
-    # Radio group ===========================================================
-    radiogroup_options <- c(paste0('option', x, '-1'),
-                            paste0('option', x, '-2'))
-    names(radiogroup_options) <- c(paste0('option', x, '-1 label'),
-                                   paste0('option', x, '-2 label'))
-    if (x_even) {
-      radiogroup_selected <- names(radiogroup_options)[1]
-    } else {
-      radiogroup_selected <- names(radiogroup_options)[2]
-    }
-
-    updateRadioInput(session, 'in_radio',
-      label = paste('radio label', x),
-      choices = radiogroup_options,
-      selected = radiogroup_selected
-    )
+    updateNumericInput(session, "inNumber2",
+      label = paste("Number label ", x),
+      value = x, min = x-10, max = x+10, step = 5)
 
 
-    # Select input ==========================================================
-    select_options <- c(paste0('option', x, '-1'),
-                        paste0('option', x, '-2'))
-    names(select_options) <- c(paste0('option', x, '-1 label'),
-                               paste0('option', x, '-2 label'))
-    if (x_even) {
-      select_selected <- names(select_options)[1]
-    } else {
-      select_selected <- names(select_options)[2]
-    }
-
-    updateSelectInput(session, 'in_select',
-      label = paste('select label', x),
-      choices = select_options,
-      selected = select_selected
-    )
-
-
-    # Multi-select input ====================================================
-    select2_options <- c(paste0('option', x, '-1'),
-                         paste0('option', x, '-2'))
-    names(select2_options) <- c(paste0('option', x, '-1 label'),
-                                paste0('option', x, '-2 label'))
-    if (x > 10) {
-      if (x_even) {
-        select2_selected <- names(select2_options)
-      } else {
-        select2_selected <- c()
-      }
-    } else {
-      if (x_even) {
-        select2_selected <- names(select2_options)[1]
-      } else {
-        select2_selected <- names(select2_options)[2]
-      }
-    }
-
-    updateSelectInput(session, 'in_select2',
-      label = paste('select label', x),
-      choices = select2_options,
-      selected = select2_selected
-    )
-
-
-    # Slider input ==========================================================
-    updateSliderInput(session, 'in_slider',
-      label = paste('slider label', x),
+    # Slider input ====================================================
+    # Similar to number and text. only label and value can be set for slider
+    updateSliderInput(session, "inSlider",
+      label = paste("Slider label", x),
       value = x)
 
 
-    # Slider range input ====================================================
-    # For slider2 value, set both, just upper, or just lower, depending on x
-    if (x > 10)      slider2_value <- c(x, x+20)
-    else if (x > 5)  slider2_value <- c(NA, x+20)
-    else             slider2_value <- c(x, NA)
-    updateSliderInput(session, 'in_slider2', value = slider2_value)
+    # Slider range input ==============================================
+    # For sliders that pick out a range, pass in a vector of 2 values.
+    updateSliderInput(session, "inSlider2", value = c(x-1, x+1))
+
+    # An NA means to not change that value (the low or high one)
+    updateSliderInput(session, "inSlider3", value = c(NA, x+2))
+
+
+    # Checkbox ========================================================
+    updateCheckboxInput(session, "inCheckbox", value = x_even)
+
+
+    # Checkbox group ==================================================
+    # Create a list of new options, where the name of the items is something
+    # like 'option label x 1', and the values are 'option-x-1'.
+    cb_options <- list()
+    cb_options[[sprintf("option label %d 1", x)]] <- sprintf("option-%d-1", x)
+    cb_options[[sprintf("option label %d 2", x)]] <- sprintf("option-%d-2", x)
+
+    # Change values for input$inCheckboxGroup
+    updateCheckboxGroupInput(session, "inCheckboxGroup", choices = cb_options)
+
+    # Can also set the label and select items
+    updateCheckboxGroupInput(session, "inCheckboxGroup2",
+      label = paste("checkboxgroup label", x),
+      choices = cb_options,
+      selected = sprintf("option label %d 2", x)
+    )
+
+    # Radio group =====================================================
+    # Create a list of new options, where the name of the items is something
+    # like 'option label x 1', and the values are 'option-x-1'.
+    r_options <- list()
+    r_options[[sprintf("option label %d 1", x)]] <- sprintf("option-%d-1", x)
+    r_options[[sprintf("option label %d 2", x)]] <- sprintf("option-%d-2", x)
+
+    # Change values for input$inRadio
+    updateRadioButtons(session, "inRadio", choices = r_options)
+
+    # Can also set the label and select an item
+    updateRadioButtons(session, "inRadio2",
+      label = paste("Radio label", x),
+      choices = r_options,
+      selected = sprintf("option label %d 2", x)
+    )
+
+
+    # Select input ====================================================
+    # Create a list of new options, where the name of the items is something
+    # like 'option label x 1', and the values are 'option-x-1'.
+    s_options <- list()
+    s_options[[sprintf("option label %d 1", x)]] <- sprintf("option-%d-1", x)
+    s_options[[sprintf("option label %d 2", x)]] <- sprintf("option-%d-2", x)
+
+    # Change values for input$inSelect
+    updateSelectInput(session, "inSelect", choices = s_options)
+
+    # Can also set the label and select an item (or more than one if it's a
+    # multi-select)
+    updateSelectInput(session, "inSelect2",
+      label = paste("Select label", x),
+      choices = s_options,
+      selected = sprintf("option label %d 2", x)
+    )
 
 
     # Tabset input ==========================================================
-    if (x == 20) updateTabsetInput(session, 'in_tabset', value = 'panel2')
-    else         updateTabsetInput(session, 'in_tabset', value = 'panel1')
-
+    # Change the selected tab.
+    # The tabsetPanel must have been created with an 'id' argument
+    if (x_even) {
+      updateTabsetPanel(session, "inTabset", selected = "panel2")
+    } else {
+      updateTabsetPanel(session, "inTabset", selected = "panel1")
+    }
   })
 })

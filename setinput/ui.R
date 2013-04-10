@@ -1,53 +1,50 @@
 shinyUI(pageWithSidebar(
-  headerPanel("Shiny Widgets"),
+  headerPanel("Setting inputs"),
   sidebarPanel(
-    sliderInput("in_controller", "This slider controls other inputs:", min = 1, max = 20, value = 15,
-                ticks = TRUE),
+    sliderInput("controller", "This slider controls other inputs:",
+                min = 1, max = 20, value = 15),
 
-    textInput("in_text", "Text input:", value="starting value"),
-    numericInput("in_number", "Number input:", min = 4, max = 10, value = 8, step = 0.5),
-    checkboxInput("in_checkbox", "Checkbox input:", value = FALSE),
-    checkboxGroupInput("in_checkboxgroup", "Checkbox group input:",
+    textInput("inText",  "Text input:",   value="starting value"),
+    textInput("inText2", "Text input 2:", value="starting value"),
+
+    numericInput("inNumber", "Number input:",
+                 min = 1, max = 20, value = 5, step = 0.5),
+    numericInput("inNumber2", "Number input 2:",
+                 min = 1, max = 20, value = 5, step = 0.5),
+
+    sliderInput("inSlider", "Slider input:",
+                min = 1, max = 20, value = 15),
+    sliderInput("inSlider2", "Slider input 2:",
+                min = 1, max = 20, value = c(5, 15)),
+    sliderInput("inSlider3", "Slider input 3:",
+                min = 1, max = 20, value = c(5, 15)),
+
+    checkboxInput("inCheckbox", "Checkbox input:", value = FALSE),
+
+    checkboxGroupInput("inCheckboxGroup", "Checkbox group input:",
                        c("label 1" = "option1",
-                         "label 2" = "option2"),
-                       selected = NULL),
-    radioButtons("in_radio", "Radio buttons:",
+                         "label 2" = "option2")),
+    checkboxGroupInput("inCheckboxGroup2", "Checkbox group input 2:",
+                       c("label 1" = "option1",
+                         "label 2" = "option2")),
+
+    radioButtons("inRadio", "Radio buttons:",
                  c("label 1" = "option1",
-                   "label 2" = "option2")
-                ),
-    selectInput("in_select", "Select input:",
+                   "label 2" = "option2")),
+    radioButtons("inRadio2", "Radio buttons 2:",
+                 c("label 1" = "option1",
+                   "label 2" = "option2")),
+
+    selectInput("inSelect", "Select input:",
                 c("label 1" = "option1",
-                  "label 2" = "option2")
-               ),
-    selectInput("in_select2", "Select 2 input:", multiple = TRUE,
+                  "label 2" = "option2")),
+    selectInput("inSelect2", "Select input 2:", multiple = TRUE,
                 c("label 1" = "option1",
-                  "label 2" = "option2")
-               ),
-    sliderInput("in_slider", "Slider input:", min = 1, max = 20, value = 15,
-                ticks = TRUE),
-    sliderInput("in_slider2", "Slider 2 input:", min = 1, max = 40, value = c(10, 30),
-                step = NULL)
+                  "label 2" = "option2"))
   ),
   mainPanel(
-    tabsetPanel(id = "in_tabset",
-      tabPanel("panel1",
-        p("Text output:"),
-        verbatimTextOutput("out_text"),
-        p("Number output:"),
-        verbatimTextOutput("out_number"),
-        p("Checkbox output:"),
-        verbatimTextOutput("out_checkbox"),
-        p("Checkbox group output:"),
-        verbatimTextOutput("out_checkboxgroup"),
-        p("Radio output:"),
-        verbatimTextOutput("out_radio"),
-        p("Select output:"),
-        verbatimTextOutput("out_select"),
-        p("Slider output:"),
-        verbatimTextOutput("out_slider"),
-        p("Slider 2 output:"),
-        verbatimTextOutput("out_slider2")
-      ),
+    tabsetPanel(id = "inTabset",
+      tabPanel("panel1", h2("This is the first panel.")),
       tabPanel("panel2", h2("This is the second panel."))
     )
   )
