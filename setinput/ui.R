@@ -19,6 +19,10 @@ shinyUI(pageWithSidebar(
     sliderInput("inSlider3", "Slider input 3:",
                 min = 1, max = 20, value = c(5, 15)),
 
+    datePickerInput("inDate", "Date input:"),
+
+    dateRangePickerInput("inDateRange", "Date range input:"),
+
     checkboxInput("inCheckbox", "Checkbox input:", value = FALSE),
 
     checkboxGroupInput("inCheckboxGroup", "Checkbox group input:",
