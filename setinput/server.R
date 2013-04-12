@@ -45,18 +45,20 @@ shinyServer(function(input, output, clientData, session) {
 
     # Date input ====================================================
     # Similar to number and text. only label and value can be set for slider
-    updateDatePickerInput(session, "inDate",
+    updateDateInput(session, "inDate",
       label = paste("Date label", x),
       value = paste("2013-04-", x, sep=""))
 
 
     # Date range input ================================================
     # Similar to number and text. only label and value can be set for slider
-    updateDateRangePickerInput(session, "inDateRange",
+    updateDateRangeInput(session, "inDateRange",
       label = paste("Date range label", x),
       start = paste("2013-01-", x, sep=""),
-      end = paste("2013-12-", x, sep=""))
-
+      end = paste("2013-12-", x, sep=""),
+      min = paste("2001-01-", x, sep=""),
+      max = paste("2030-12-", x, sep="")
+    )
 
     # Checkbox ========================================================
     updateCheckboxInput(session, "inCheckbox", value = x_even)
