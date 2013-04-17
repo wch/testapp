@@ -1,16 +1,18 @@
 shinyUI(pageWithSidebar(
-  headerPanel("Setting inputs"),
+  headerPanel("Message sending, with message hander in inline Javascript"),
+
   sidebarPanel(
-    sliderInput("controller", "This slider controls other inputs:",
+    sliderInput("controller", "Controller:",
                 min = 1, max = 20, value = 15)
   ),
+
   mainPanel(
-    tags$script('
+    tags$head(tags$script('
       Shiny.registerMessageHandler("testmessage",
         function(message) {
           alert(JSON.stringify(message));
         }
-      );'
-    )
+      );
+    '))
   )
 ))
