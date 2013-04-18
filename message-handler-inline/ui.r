@@ -8,7 +8,7 @@ shinyUI(pageWithSidebar(
 
   mainPanel(
     tags$head(tags$script('
-      Shiny.registerMessageHandler("testmessage",
+      Shiny.addCustomMessageHandler("testmessage",
         function(message) {
           alert(JSON.stringify(message));
         }
