@@ -7,12 +7,14 @@ shinyUI(pageWithSidebar(
   ),
 
   mainPanel(
-    tags$head(tags$script('
+    # Put this script in the header, and use the HTML() function to make
+    # sure that characters like '<' don't get escaped.
+    tags$head(tags$script(HTML('
       Shiny.addCustomMessageHandler("testmessage",
         function(message) {
           alert(JSON.stringify(message));
         }
       );
-    '))
+    ')))
   )
 ))
