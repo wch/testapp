@@ -1,4 +1,4 @@
-shinyServer(function(input, output, clientData, session) {
+shinyServer(function(input, output, session) {
 
   # input$date and others are Date objects; need to convert to character,
   # otherwise it will print an integer rather than a date.
@@ -7,4 +7,21 @@ shinyServer(function(input, output, clientData, session) {
 
   output$daterange  <- renderText({ as.character(input$daterange) })
   output$daterange2 <- renderText({ as.character(input$daterange2) })
+
+  observe({
+    updateDateInput(session, 'date_controlled',
+      value = as.character(input$date),
+      min   = as.character(input$daterange2[1]),
+      max   = as.character(input$daterange2[2])
+    )
+
+    updateDateRangeInput(session, 'daterange_controlled',
+      start = as.character(input$daterange[1]),
+      end   = as.character(input$daterange[2]),
+      min   = as.character(input$daterange2[1]),
+      max   = as.character(input$daterange2[2])
+    )
+
+  })
+
 })
