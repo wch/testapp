@@ -18,7 +18,7 @@ shinyUI(pageWithSidebar(
 
 
     tags$hr(),
-    h3("Defaults tests"),
+    h4("Tests for default values"),
 
     dateInput('date2',
       label = 'Date input 2: string for starting value, mm/dd/yy, zh-TW, range limit, weekstart=1',
@@ -43,8 +43,7 @@ shinyUI(pageWithSidebar(
     dateInput("date_controlled",
               "Date input controlled from sidebar"),
     dateRangeInput("daterange_controlled",
-                   "Date range input controlled from sidebar"),
-    p(Sys.time())
+                   "Date range input controlled from sidebar")
   )
 
 ))
