@@ -11,15 +11,15 @@ shinyServer(function(input, output, session) {
   observe({
     updateDateInput(session, 'date_controlled',
       value = as.character(input$date),
-      min   = as.character(input$daterange2[1]),
-      max   = as.character(input$daterange2[2])
+      min   = as.character(input$daterange[1]),
+      max   = as.character(input$daterange[2])
     )
 
     updateDateRangeInput(session, 'daterange_controlled',
-      start = as.character(input$daterange[1]),
-      end   = as.character(input$daterange[2]),
-      min   = as.character(input$daterange2[1]),
-      max   = as.character(input$daterange2[2])
+      min   = as.character(input$daterange[1]),
+      max   = as.character(input$daterange[2]),
+      start = as.character(input$daterange2[1]),
+      end   = as.character(input$daterange2[2])
     )
 
   })
