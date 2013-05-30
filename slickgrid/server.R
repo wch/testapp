@@ -1,7 +1,7 @@
 library(shinySlickgrid)
 library(ggplot2) # For diamonds data
 
-shinyServer(function(input, output, session) {
+shinyServer(function(input, output) {
 
   datasetInput <- reactive({
     switch(input$dataset,
