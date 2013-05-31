@@ -1,7 +1,6 @@
-shinyServer(function(input, output, clientData, session) {
-  # Send message to the in_number objet
+shinyServer(function(input, output, session) {
   observe({
     js_string <- sprintf('alert("slider is %d");', input$controller)
-    session$sendJavascript(js_string)
+    session$sendCustomMessage(type='jsCode', list(value = js_string))
   })
 })

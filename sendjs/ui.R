@@ -1,10 +1,18 @@
 shinyUI(pageWithSidebar(
-  headerPanel("Shiny Widgets"),
+  headerPanel("Send Javascript test"),
   sidebarPanel(
-    sliderInput("controller", "This slider controls other inputs:",
-                min = 1, max = 20, value = 15)
+    sliderInput("controller", "Controller:", min = 1, max = 20, value = 15)
   ),
   mainPanel(
-    h2("Filler text")
+    h2("Filler text"),
+
+    # Add a message handler that simply evaluates the message as Javascript
+    tags$head(tags$script(HTML('
+      Shiny.addCustomMessageHandler("jsCode",
+        function(message) {
+          eval(message.value);
+        }
+      );
+    ')))
   )
 ))
