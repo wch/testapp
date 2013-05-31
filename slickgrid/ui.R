@@ -8,6 +8,6 @@ shinyUI(pageWithSidebar(
                 choices = c("rock", "pressure", "mtcars", "diamonds"))
   ),
   mainPanel(
-    slickgridOutput("view", editable = TRUE)
+    slickgridOutput("view")
   )
 ))
