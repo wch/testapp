@@ -1,5 +1,6 @@
 shinyServer(function(input, output, session) {
 
+  # The current low and high slider values, with initial values provided
   loValue <- reactive({
     if (is.null(input$loSliderValue))
       1
@@ -14,16 +15,20 @@ shinyServer(function(input, output, session) {
       input$hiSliderValue
   })
 
+  # Create the sliders. Use isolate() around the value so that the slider isn't
+  # re-sent when it's changed (it should only be re-sent when the other slider
+  # changes).
   output$loSlider <- renderUI({
     sliderInput("loSliderValue", "Low Slider Value:", min = 1, max = hiValue(),
-      value = loValue())
+      value = isolate(loValue()))
   })
 
   output$hiSlider <- renderUI({
     sliderInput("hiSliderValue", "High Slider Value:", min = loValue(), max = 10,
-      value = hiValue())
+      value = isolate(hiValue()))
   })
 
+  # Text output for the slider values
   output$loValueText <- renderText({ loValue() })
   output$hiValueText <- renderText({ hiValue() })
 })
