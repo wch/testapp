@@ -9,4 +9,4 @@ shinyUI(bootstrapPage(
       });
     });
   ")
-)
+))
